@@ -79,4 +79,19 @@ public class BallBehaviour : MonoBehaviour {
         ballBody.velocity = new Vector2(0f, 0f);
         ballTransform.position = new Vector3(0f, 0f, 0f);
     }
+
+    public float CheckRightDirection()
+    {
+        /*
+        if(ballBody.velocity.x > 0)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+        */
+        return ballBody.velocity.x;
+    }
 }

@@ -4,9 +4,11 @@ using UnityEngine;
 
 public class AutoControl : MonoBehaviour {
 
+    public bool rightSide = false;
+
     GameManager gameManager;
     GameObject manager;
-    [SerializeField]
+    BallBehaviour ballBehaviour;
     GameObject ball;
     [SerializeField]
     float size;
@@ -17,6 +19,8 @@ public class AutoControl : MonoBehaviour {
     {
         manager = GameObject.Find("GameManager");
         gameManager = manager.GetComponent<GameManager>();
+        ball = GameObject.Find("Ball");
+        ballBehaviour = ball.GetComponent<BallBehaviour>();
         racketBody = GetComponent<Rigidbody2D>();
     }
 
@@ -34,7 +38,11 @@ public class AutoControl : MonoBehaviour {
 
     void FixedUpdate ()
     {
-        if(gameManager.gameState == 1)
+        if(!rightSide && gameManager.gameState == 1 && ballBehaviour.CheckRightDirection() <= 0)
+        {
+            racketBody.velocity = new Vector2(0f, (ball.transform.position.y - this.transform.position.y) * gameManager.racketSpeed);
+        }
+        else if(rightSide && gameManager.gameState == 1 && ballBehaviour.CheckRightDirection() >= 0)
         {
             racketBody.velocity = new Vector2(0f, (ball.transform.position.y - this.transform.position.y) * gameManager.racketSpeed);
         }

@@ -52,6 +52,8 @@ public class GameManager : MonoBehaviour {
                 {
                     if (reset)
                     {
+                        score1 = 0;
+                        score2 = 0;
                         scoreGoal1 = 0;
                         scoreGoal2 = 0;
                         while (scoreGoal1 == 0 && scoreGoal2 == 0)
@@ -74,6 +76,11 @@ public class GameManager : MonoBehaviour {
     public void Scoring(int door)
     {
         gameState = 0;
+        if(ballSpeed < 10)
+        {
+            ballSpeed = ballSpeed + 0.5f;
+            racketSpeed = racketSpeed + 0.5f;
+        }
         switch (door)
         {
             case 1:
