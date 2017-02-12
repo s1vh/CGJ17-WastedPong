@@ -47,4 +47,11 @@ public class AutoControl : MonoBehaviour {
             racketBody.velocity = new Vector2(0f, (ball.transform.position.y - this.transform.position.y) * gameManager.racketSpeed);
         }
     }
+
+    /*
+    public void Rescale(int factor)
+    {
+        this.transform.localScale = new Vector3(1f, factor, 1f);
+    }
+    */
 }

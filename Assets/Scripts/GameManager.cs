@@ -6,6 +6,7 @@ public class GameManager : MonoBehaviour {
 
     BallBehaviour ballBehaviour;
     GameObject ball;
+    GameObject[] rackets;
     public static int level;
     public int gameState;
     public float racketSpeed;
@@ -26,6 +27,7 @@ public class GameManager : MonoBehaviour {
     {
         ball = GameObject.Find("Ball");
         ballBehaviour = ball.GetComponent<BallBehaviour>();
+        rackets = GameObject.FindGameObjectsWithTag("Player");
     }
 
     // Use this for initialization
@@ -110,6 +112,10 @@ public class GameManager : MonoBehaviour {
                 ballSpeed = 1;
                 playerScore++;  // balancear en base al tiempo
                 Debug.Log("Sucess! Starting level " + level);
+                foreach(GameObject racket in rackets)
+                {
+                    racket.transform.localScale = new Vector3(1f, 11-level, 1f);
+                }
             }
             else
             {
