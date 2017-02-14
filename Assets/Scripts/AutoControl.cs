@@ -6,13 +6,11 @@ public class AutoControl : MonoBehaviour {
 
     public bool rightSide = false;
 
-    GameManager gameManager;
-    GameObject manager;
-    BallBehaviour ballBehaviour;
-    GameObject ball;
-    [SerializeField]
-    float size;
-    Rigidbody2D racketBody;
+    private GameManager gameManager;
+    private GameObject manager;
+    private BallBehaviour ballBehaviour;
+    private GameObject ball;
+    private Rigidbody2D racketBody;
 
     // Set up references.
     void Awake()
@@ -40,7 +38,7 @@ public class AutoControl : MonoBehaviour {
     {
         if(!rightSide && gameManager.gameState == 1 && ballBehaviour.CheckRightDirection() <= 0)
         {
-            racketBody.velocity = new Vector2(0f, (ball.transform.position.y - this.transform.position.y) * gameManager.racketSpeed);
+            racketBody.velocity = new Vector2(0f, (ball.transform.position.y - this.transform.position.y) * gameManager.racketSpeed * Mathf.Sqrt(2));
         }
         else if(rightSide && gameManager.gameState == 1 && ballBehaviour.CheckRightDirection() >= 0)
         {
@@ -48,10 +46,4 @@ public class AutoControl : MonoBehaviour {
         }
     }
 
-    /*
-    public void Rescale(int factor)
-    {
-        this.transform.localScale = new Vector3(1f, factor, 1f);
-    }
-    */
 }

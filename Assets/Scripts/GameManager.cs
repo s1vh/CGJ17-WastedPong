@@ -4,9 +4,6 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour {
 
-    BallBehaviour ballBehaviour;
-    GameObject ball;
-    GameObject[] rackets;
     public static int level;
     public int gameState;
     public float racketSpeed;
@@ -14,19 +11,26 @@ public class GameManager : MonoBehaviour {
     public float timer;
     public int playerScore;
 
+    private BallBehaviour ballBehaviour;
+    private GameObject ball;
+    private GameObject[] rackets;
+    private PlayerControl playerControl;
+    private GameObject player;
     [SerializeField]
-    int goalCap = 9;
-    int scoreGoal1;
-    int scoreGoal2;
-    int score1;
-    int score2;
-    bool reset;
+    private int goalCap = 9;
+    private int scoreGoal1;
+    private int scoreGoal2;
+    private int score1;
+    private int score2;
+    private bool reset;
 
     // Set up references.
     void Awake()
     {
         ball = GameObject.Find("Ball");
         ballBehaviour = ball.GetComponent<BallBehaviour>();
+        player = GameObject.Find("PalaPlayer");
+        playerControl = player.GetComponent<PlayerControl>();
         rackets = GameObject.FindGameObjectsWithTag("Player");
     }
 
@@ -46,12 +50,14 @@ public class GameManager : MonoBehaviour {
 	void Update ()
     {
         timer += Time.deltaTime;
-        Debug.Log("GameState:" + gameState);
+        //Debug.Log("GameState:" + gameState);
         switch (gameState)
         {
+            // START
             case 0:
                 if (Input.GetButtonUp("Jump"))
                 {
+                    // Reset
                     if (reset)
                     {
                         score1 = 0;
@@ -77,7 +83,7 @@ public class GameManager : MonoBehaviour {
 
     public void Scoring(int door)
     {
-        gameState = 0;
+        gameState = 0;      // Stop
         if(ballSpeed < 10)
         {
             ballSpeed = ballSpeed + 0.5f;
@@ -86,24 +92,27 @@ public class GameManager : MonoBehaviour {
         switch (door)
         {
             case 1:
-                score1++;
+                score1++;   // Check score overflow
                 Debug.Log("Score 1: " + score1);
                 if (score1 > scoreGoal1)
                 {
                     reset = true;
+                    playerControl.TurnPlayerOn(false);
                     Debug.Log("Overflow! Reseting... ");
                 }
                 break;
             case 2:
-                score2++;
+                score2++;   // Check score overflow
                 Debug.Log("Score 2: " + score2);
                 if (score2 > scoreGoal2)
                 {
                     reset = true;
+                    playerControl.TurnPlayerOn(false);
                     Debug.Log("Overflow! Reseting... ");
                 }
                 break;
         }
+        // Check win condition
         if (score1 == scoreGoal1 && score2 == scoreGoal2)
         {
             if (level <= 10)

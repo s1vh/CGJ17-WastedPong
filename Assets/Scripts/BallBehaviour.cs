@@ -4,17 +4,21 @@ using UnityEngine;
 
 public class BallBehaviour : MonoBehaviour {
 
-    GameManager gameManager;
-    GameObject manager;
-    Rigidbody2D ballBody;
-    Transform ballTransform;
-    Vector2 direction;
+    private GameManager gameManager;
+    private GameObject manager;
+    private PlayerControl playerControl;
+    private GameObject player;
+    private Rigidbody2D ballBody;
+    private Transform ballTransform;
+    private Vector2 direction;
 
     // Set up references.
     void Awake()
     {
         manager = GameObject.Find("GameManager");
         gameManager = manager.GetComponent<GameManager>();
+        player = GameObject.Find("PalaPlayer");
+        playerControl = player.GetComponent<PlayerControl>();
         ballTransform = GetComponent<Transform>();
         ballBody = GetComponent<Rigidbody2D>();
     }
@@ -31,6 +35,7 @@ public class BallBehaviour : MonoBehaviour {
         {
             case "Player":
                 direction = new Vector2(-direction.x, direction.y);
+                playerControl.TurnPlayerOn(true);
                 ApplyVelocity();
                 break;
             case "Wall":

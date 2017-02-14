@@ -4,15 +4,15 @@ using UnityEngine;
 
 public class GoalBox : MonoBehaviour {
 
-    GameManager gameManager;
-    GameObject manager;
+    //GameManager gameManager;
+    //GameObject manager;
     public int goalNum = 1;
 
     // Set up references.
     void Awake()
     {
-        manager = GameObject.Find("GameManager");
-        gameManager = manager.GetComponent<GameManager>();
+        //manager = GameObject.Find("GameManager");
+        //gameManager = manager.GetComponent<GameManager>();
     }
 
     // Use this for initialization
