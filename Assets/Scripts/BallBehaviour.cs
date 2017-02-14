@@ -35,7 +35,6 @@ public class BallBehaviour : MonoBehaviour {
         {
             case "Player":
                 direction = new Vector2(-direction.x, direction.y);
-                playerControl.TurnPlayerOn(true);
                 ApplyVelocity();
                 break;
             case "Wall":
@@ -47,6 +46,14 @@ public class BallBehaviour : MonoBehaviour {
                 gameManager.Scoring(col.gameObject.GetComponent<GoalBox>().goalNum);
                 Debug.Log("Goal! " + col.gameObject.GetComponent<GoalBox>().goalNum);
                 break;
+        }
+    }
+
+    void OnTriggerExit2D(Collider2D col)
+    {
+        if (col.tag == "Respawn")
+        {
+            playerControl.TurnPlayerOn(true);
         }
     }
 

@@ -92,22 +92,22 @@ public class GameManager : MonoBehaviour {
         switch (door)
         {
             case 1:
-                score1++;   // Check score overflow
+                score1++;
+                playerControl.TurnPlayerOn(false);
                 Debug.Log("Score 1: " + score1);
-                if (score1 > scoreGoal1)
+                if (score1 > scoreGoal1)    // Check score overflow
                 {
                     reset = true;
-                    playerControl.TurnPlayerOn(false);
                     Debug.Log("Overflow! Reseting... ");
                 }
                 break;
             case 2:
-                score2++;   // Check score overflow
+                score2++;
+                playerControl.TurnPlayerOn(false);
                 Debug.Log("Score 2: " + score2);
-                if (score2 > scoreGoal2)
+                if (score2 > scoreGoal2)    // Check score overflow
                 {
                     reset = true;
-                    playerControl.TurnPlayerOn(false);
                     Debug.Log("Overflow! Reseting... ");
                 }
                 break;

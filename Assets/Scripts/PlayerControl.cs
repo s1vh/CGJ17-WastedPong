@@ -29,7 +29,14 @@ public class PlayerControl : MonoBehaviour {
 	// Update is called once per frame
 	void Update ()
     {
-        input = Input.GetAxis("Vertical");
+        if (playerCollider.enabled)
+        {
+            input = Input.GetAxis("Vertical");
+        }
+        else
+        {
+            input = 0;
+        }
         //Debug.Log(input);
     }
 
