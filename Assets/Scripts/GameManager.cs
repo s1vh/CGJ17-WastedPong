@@ -73,6 +73,10 @@ public class GameManager : MonoBehaviour {
                         Debug.Log("Score Goal 1: " + scoreGoal1);
                         Debug.Log("Score Goal 2: " + scoreGoal2);
                     }
+                    foreach (GameObject racket in rackets)
+                    {
+                        racket.transform.position = new Vector3(racket.transform.position.x, 0f, racket.transform.position.z);
+                    }
                     ballBehaviour.LaunchBall();
                     gameState = 1;
                     Debug.Log("Start");

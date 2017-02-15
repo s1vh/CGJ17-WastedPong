@@ -37,12 +37,11 @@ public class PlayerControl : MonoBehaviour {
         {
             input = 0;
         }
-        //Debug.Log(input);
     }
 
     void FixedUpdate ()
     {
-        racketBody.velocity = new Vector2(0f, input * gameManager.racketSpeed * 2);
+        racketBody.velocity = new Vector2(0f, input * gameManager.racketSpeed * 10);
     }
 
     public void TurnPlayerOn(bool on)

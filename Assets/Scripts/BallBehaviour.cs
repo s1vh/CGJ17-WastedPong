@@ -4,13 +4,18 @@ using UnityEngine;
 
 public class BallBehaviour : MonoBehaviour {
 
+    public int maxBounces = 16;
+
     private GameManager gameManager;
     private GameObject manager;
     private PlayerControl playerControl;
     private GameObject player;
     private Rigidbody2D ballBody;
     private Transform ballTransform;
+    private Renderer ballRender;
     private Vector2 direction;
+    [SerializeField]
+    private int bounces;
 
     // Set up references.
     void Awake()
@@ -21,12 +26,13 @@ public class BallBehaviour : MonoBehaviour {
         playerControl = player.GetComponent<PlayerControl>();
         ballTransform = GetComponent<Transform>();
         ballBody = GetComponent<Rigidbody2D>();
+        ballRender = GetComponentInChildren<Renderer>();
     }
 
     // Use this for initialization
     void Start ()
     {
-
+        bounces = 0;
     }
 
     void OnTriggerEnter2D(Collider2D col)
@@ -34,6 +40,7 @@ public class BallBehaviour : MonoBehaviour {
         switch (col.tag)
         {
             case "Player":
+                if (bounces < maxBounces) { bounces++; }
                 direction = new Vector2(-direction.x, direction.y);
                 ApplyVelocity();
                 break;
@@ -42,7 +49,9 @@ public class BallBehaviour : MonoBehaviour {
                 ApplyVelocity();
                 break;
             case "Goal":
-                Reset();
+                ballBody.velocity = new Vector2(0f, 0f);
+                //ResetBall();
+                ballRender.enabled = false;
                 gameManager.Scoring(col.gameObject.GetComponent<GoalBox>().goalNum);
                 Debug.Log("Goal! " + col.gameObject.GetComponent<GoalBox>().goalNum);
                 break;
@@ -63,11 +72,6 @@ public class BallBehaviour : MonoBehaviour {
 		
 	}
 
-    void ApplyVelocity ()
-    {
-        ballBody.velocity = direction * gameManager.ballSpeed;
-    }
-
     float RandomSign(float num)
     {
         int sign = -1;
@@ -77,19 +81,26 @@ public class BallBehaviour : MonoBehaviour {
             i--;
             sign = sign * -1;
         }
-        return num*sign;
+        return num * sign;
+    }
+
+    void ResetBall()
+    {
+        bounces = 0;
+        ballTransform.position = new Vector3(0f, Random.Range(-4f, 4f), 0f);
+    }
+
+    void ApplyVelocity ()
+    {
+        ballBody.velocity = direction * (gameManager.ballSpeed + bounces * 0.1f);
     }
 
     public void LaunchBall()
     {
+        ResetBall();
+        ballRender.enabled = true;
         direction = new Vector2(RandomSign(4f), RandomSign(4f));
         ApplyVelocity();
-    }
-
-    public void Reset()
-    {
-        ballBody.velocity = new Vector2(0f, 0f);
-        ballTransform.position = new Vector3(0f, 0f, 0f);
     }
 
     public float CheckRightDirection()
